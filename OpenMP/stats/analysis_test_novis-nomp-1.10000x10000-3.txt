@@ -1,0 +1,43 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 13.35      0.51     0.51                             game_of_life_stats (02_gol_cpu_openmp_loop.c:61 @ 1948)
+ 10.08      0.90     0.39                             game_of_life (02_gol_cpu_openmp_loop.c:35 @ 171e)
+  9.55      1.26     0.37                             game_of_life (02_gol_cpu_openmp_loop.c:44 @ 182e)
+  9.16      1.61     0.35                             game_of_life (02_gol_cpu_openmp_loop.c:15 @ 170c)
+  5.89      1.84     0.23                             game_of_life (02_gol_cpu_openmp_loop.c:49 @ 183e)
+  5.63      2.05     0.22                             game_of_life (02_gol_cpu_openmp_loop.c:36 @ 1740)
+  5.50      2.27     0.21                             game_of_life (02_gol_cpu_openmp_loop.c:18 @ 1708)
+  5.10      2.46     0.20                             game_of_life (02_gol_cpu_openmp_loop.c:11 @ 16b0)
+  4.45      2.63     0.17                             game_of_life (02_gol_cpu_openmp_loop.c:37 @ 175e)
+  4.32      2.80     0.17                             game_of_life (02_gol_cpu_openmp_loop.c:17 @ 1704)
+  4.32      2.96     0.17                             game_of_life (02_gol_cpu_openmp_loop.c:39 @ 17a4)
+  4.19      3.12     0.16                             game_of_life (02_gol_cpu_openmp_loop.c:41 @ 17e9)
+  3.53      3.26     0.14                             game_of_life (02_gol_cpu_openmp_loop.c:38 @ 1783)
+  2.36      3.35     0.09                             game_of_life (02_gol_cpu_openmp_loop.c:46 @ 1860)
+  2.36      3.44     0.09                             visualise_ascii (common.c:229 @ 2204)
+  2.09      3.52     0.08                             game_of_life (02_gol_cpu_openmp_loop.c:42 @ 180e)
+  1.96      3.59     0.08                             visualise_ascii (common.c:226 @ 220f)
+  1.18      3.64     0.05                             game_of_life (02_gol_cpu_openmp_loop.c:17 @ 1700)
+  1.18      3.68     0.05                             printf (stdio2.h:107 @ 220a)
+  1.05      3.72     0.04                             game_of_life (02_gol_cpu_openmp_loop.c:40 @ 17ca)
+  1.05      3.76     0.04                             visualise_ascii (common.c:229 @ 21f0)
+  0.39      3.78     0.02                             game_of_life (02_gol_cpu_openmp_loop.c:18 @ 1702)
+  0.26      3.79     0.01                             printf (stdio2.h:107 @ 21f4)
+  0.00      3.79     0.00        3     0.00     0.00  visualise_ascii (common.c:221 @ 2160)
+  0.00      3.79     0.00        2     0.00     0.00  report_memory_usage (common.c:24 @ 1b70)
+  0.00      3.79     0.00        1     0.00     0.00  cpuset_to_cstr (common.c:124 @ 1d70)
+  0.00      3.79     0.00        1     0.00     0.00  report_core_binding (common.c:159 @ 1f20)
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 78.77      3.02     3.02                             game_of_life
+ 13.35      3.53     0.51                             game_of_life_stats
+  6.80      3.79     0.26        3    86.87    86.87  visualise_ascii
+  0.00      3.79     0.00        2     0.00     0.00  report_memory_usage
+  0.00      3.79     0.00        1     0.00     0.00  cpuset_to_cstr
+  0.00      3.79     0.00        1     0.00     0.00  report_core_binding

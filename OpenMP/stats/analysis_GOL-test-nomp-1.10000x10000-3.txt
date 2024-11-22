@@ -1,0 +1,50 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 12.25      0.38     0.38                             game_of_life_stats (02_gol_cpu_openmp_loop.c:50 @ 1848)
+ 11.28      0.73     0.35                             game_of_life (02_gol_cpu_openmp_loop.c:12 @ 1697)
+ 11.12      1.08     0.35                             generate_rand_IC (common.c:293 @ 2248)
+ 10.48      1.40     0.33                             game_of_life (02_gol_cpu_openmp_loop.c:28 @ 16f1)
+  9.51      1.70     0.30                             game_of_life (02_gol_cpu_openmp_loop.c:29 @ 16fd)
+  7.09      1.92     0.22                             game_of_life (02_gol_cpu_openmp_loop.c:36 @ 175d)
+  6.45      2.12     0.20                             game_of_life (02_gol_cpu_openmp_loop.c:29 @ 1704)
+  4.84      2.27     0.15                             game_of_life (02_gol_cpu_openmp_loop.c:37 @ 176f)
+  4.51      2.41     0.14                             game_of_life (02_gol_cpu_openmp_loop.c:39 @ 167c)
+  4.19      2.54     0.13                             game_of_life (02_gol_cpu_openmp_loop.c:31 @ 1728)
+  2.42      2.62     0.08                             game_of_life (02_gol_cpu_openmp_loop.c:34 @ 1670)
+  2.26      2.69     0.07                             game_of_life (02_gol_cpu_openmp_loop.c:28 @ 1792)
+  1.93      2.75     0.06                             game_of_life (02_gol_cpu_openmp_loop.c:18 @ 16a1)
+  1.61      2.80     0.05                             game_of_life (02_gol_cpu_openmp_loop.c:16 @ 169e)
+  1.61      2.85     0.05                             game_of_life (02_gol_cpu_openmp_loop.c:34 @ 1748)
+  1.45      2.89     0.05                             visualise_ascii (common.c:226 @ 210f)
+  1.29      2.93     0.04                             visualise_ascii (common.c:229 @ 2104)
+  1.13      2.97     0.04                             game_of_life (02_gol_cpu_openmp_loop.c:9 @ 1651)
+  0.97      3.00     0.03                             game_of_life (02_gol_cpu_openmp_loop.c:30 @ 171a)
+  0.81      3.02     0.03                             printf (stdio2.h:107 @ 210a)
+  0.64      3.04     0.02                             game_of_life (02_gol_cpu_openmp_loop.c:9 @ 1682)
+  0.64      3.06     0.02                             game_of_life (02_gol_cpu_openmp_loop.c:32 @ 173b)
+  0.32      3.07     0.01                             game_of_life (02_gol_cpu_openmp_loop.c:25 @ 16a4)
+  0.32      3.08     0.01                             printf (stdio2.h:107 @ 20f4)
+  0.32      3.09     0.01                             printf (stdio2.h:107 @ 20fe)
+  0.32      3.10     0.01                             visualise_ascii (common.c:229 @ 20f0)
+  0.32      3.11     0.01                             visualise_ascii (common.c:229 @ 20fc)
+  0.16      3.12     0.01                             generate_rand_IC (common.c:292 @ 2278)
+  0.00      3.12     0.00        3     0.00     0.00  visualise_ascii (common.c:221 @ 2060)
+  0.00      3.12     0.00        2     0.00     0.00  report_memory_usage (common.c:24 @ 1a70)
+  0.00      3.12     0.00        1     0.00     0.00  cpuset_to_cstr (common.c:124 @ 1c70)
+  0.00      3.12     0.00        1     0.00     0.00  generate_rand_IC (common.c:290 @ 21f0)
+  0.00      3.12     0.00        1     0.00     0.00  report_core_binding (common.c:159 @ 1e20)
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 71.88      2.24     2.24                             game_of_life
+ 12.25      2.62     0.38                             game_of_life_stats
+ 11.28      2.97     0.35        1   350.86   350.86  generate_rand_IC
+  4.84      3.12     0.15        3    50.12    50.12  visualise_ascii
+  0.00      3.12     0.00        2     0.00     0.00  report_memory_usage
+  0.00      3.12     0.00        1     0.00     0.00  cpuset_to_cstr
+  0.00      3.12     0.00        1     0.00     0.00  report_core_binding

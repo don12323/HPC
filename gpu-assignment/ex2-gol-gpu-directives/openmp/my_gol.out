@@ -1,0 +1,134 @@
+rm obj/*
+rm bin/*
+[ -d obj ] || mkdir obj
+[ -d bin ] || mkdir bin
+hipcc -cpp -O2    -c src/common.c -o obj/common.o
+clang-14: warning: argument unused during compilation: '-cpp' [-Wunused-command-line-argument]
+hipcc -O2    -c src/01_gol_cpu_serial.c -o obj/01_gol_cpu_serial.o
+hipcc -O2    -o bin/01_gol_cpu_serial obj/01_gol_cpu_serial.o obj/common.o
+/opt/rocm/llvm/bin/flang -cpp -O2    -c src/common_fort.f90 -o obj/common_fort.o
+/opt/rocm/llvm/bin/flang -cpp -O2    -c src/01_gol_cpu_serial_fort.f90 -o obj/01_gol_cpu_serial_fort.o
+/opt/rocm/llvm/bin/flang -O2    -o bin/01_gol_cpu_serial_fort obj/01_gol_cpu_serial_fort.o obj/common_fort.o
+hipcc -O2   -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a  -c src/02_gol_gpu_openmp.c -o obj/02_gol_gpu_openmp.o
+hipcc -O2   -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a  -o bin/02_gol_gpu_openmp obj/02_gol_gpu_openmp.o obj/common.o 
+warning: Linking two modules of different data layouts: '/tmp/common-640a90.o' is '' whereas 'llvm-link' is 'e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5-G1-ni:7'
+
+/opt/rocm/llvm/bin/flang -cpp -O2   -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a  -c src/02_gol_gpu_openmp_fort.f90 -o obj/02_gol_gpu_openmp_fort.o
+/opt/rocm/llvm/bin/flang -O2   -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a  -o bin/02_gol_gpu_openmp_fort obj/02_gol_gpu_openmp_fort.o obj/common_fort.o
+warning: Linking two modules of different data layouts: '/tmp/common_fort-d46d12.o' is '' whereas 'llvm-link' is 'e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5-G1-ni:7'
+
+Requesting grid size of (10,10), which requires 0.000000 GB 
+Elapsed time 0.000041 s
+Elapsed time 0.000023 s
+Elapsed time 0.000024 s
+Elapsed time 0.000017 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000022 s
+Elapsed time 0.000023 s
+Elapsed time 0.000022 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000022 s
+Elapsed time 0.000022 s
+Elapsed time 0.000016 s
+Elapsed time 0.000024 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000024 s
+Elapsed time 0.000022 s
+Elapsed time 0.000022 s
+Elapsed time 0.000022 s
+Elapsed time 0.000016 s
+Elapsed time 0.000022 s
+Elapsed time 0.000023 s
+Elapsed time 0.000024 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000015 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000015 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000024 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000015 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000023 s
+Elapsed time 0.000017 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000022 s
+Elapsed time 0.000017 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000024 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Elapsed time 0.000017 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000022 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000015 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000016 s
+Elapsed time 0.000023 s
+Game of Life
+Step 100:
+                              
+                              
+                              
+                         *  * 
+                         *  * 
+                              
+                              
+                              
+                              
+                              
+Finnished GOL
+Elapsed time 0.005695 s

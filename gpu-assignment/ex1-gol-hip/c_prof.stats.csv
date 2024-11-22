@@ -1,0 +1,2 @@
+"Name","Calls","TotalDurationNs","AverageNs","Percentage"
+"gpu_game_of_life_step(int*, int*, int, int) [clone .kd]",100,3835052,38350,100.0

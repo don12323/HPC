@@ -1,0 +1,188 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{geometry}
+\title{GPU Programming Assignment}
+\author{Cristian Di Pietrantonio\\cdipietrantonio@pawsey.org.au\\\vspace{0.3em}\\
+	Maciej Cytowski\\Maciej.Cytowski@csiro.au\\\vspace{0.3em}\\Ilkhom Abdurakhmanov\\Ilkhom.Abdurakhmanov@csiro.au}
+
+\date{}
+\begin{document}
+	\maketitle
+	
+	\section{Preliminaries}
+	
+	In this assignment you are asked to write programs that run on GPUs using HIP and OpenMP.
+	
+	\subsection{Using the GPUs of Setonix}
+	Setonix is the latest Pawsey supercomputer whose computational power mostly comes from its GPUs. There are 192 GPU nodes, each with four AMD MI250X GPUs. A MI250X GPU is composed of two Graphics Compute Dies (GCDs). In practice, each node has 8 GPUs as seen by the software environment.
+
+	A Slurm \textit{reservation} has been created, named \texttt{CurtinHPCcourse}, that grants course attendees exclusive access to 2 \texttt{gpu} nodes, for a total of 16 GPUs. In addition to those nodes you can still submit jobs to the \texttt{gpu} and \texttt{gpu-dev} partitions without reservation, using other nodes as they become available (which should not take much time). If you encounter an issue, contact one of the lecturers via email.
+	
+	The login nodes of Setonix are available at \texttt{setonix.pawsey.org.au}; username and project code are the same as the ones used in previous lectures. Use any SSH client you prefer.
+	
+	% Within the batch script, remember to request one GPU (\texttt{\#SBATCH --gres=gpu:1}) and to use \texttt{srun} to execute your program.
+	\subsection{Assignment structure}
+	
+	The assignment archive, \texttt{gpu-assignment.zip}, is structured as follow:
+	
+	\begin{itemize}
+		\item \texttt{assignment.pdf}: this file, containing the description of the assignment;
+		\item \texttt{ex1-gol-hip/}: directory for the first exercise;
+		\item  \texttt{ex2-gol-gpu-directives/}: directory for the the second exercise;
+		\item \texttt{report.pdf}, \texttt{report.tex}: sample assignment report.
+		
+	\end{itemize}
+	
+	Grades for this assignment will range from 0 to 1. A scaling factor will be applied to bring the grades in the desired range.
+
+\subsection{What to submit}
+Submit the two directories \texttt{ex1-gol-hip} and  \texttt{ex2-gol-gpu-directives} containing all the modified files representing the solutions to the assignment. In addition you must a PDF report summarising your work, key findings and conclusions. A sample of PDF report and associated LaTeX source can be found in the assignment package.
+
+	\section{Exercise 1: the game of life using HIP (0.5 points total)}
+	
+	This exercise will make you familiar with the process of adapting an existing serial CPU code to make it run on a GPU. This process is often called \textit{porting}. The program, which now you should be familiar with, implements The Game of Life, described in Section 1 of the \href{https://pawsey.atlassian.net/wiki/download/attachments/51923133/HPC_Course_OpenMP_Assignment.pdf?api=v2}{OpenMP assignment}.
+	
+	For this exercise, you will work in the \texttt{ex1-gol-hip} directory. It contains 
+	\begin{itemize}
+		\item a \texttt{Makefile} file to assist you in compiling both the CPU code and the GPU one (that does not exist yet).
+		\item a \texttt{src/} directory to collect source files for this exercise. Files implementing the CPU program in C are already there.
+		\item a \texttt{LICENSE} file, containing the license which this material is distributed under.
+	\end{itemize}
+	
+	The very first step is to compile the CPU code. Execute the \texttt{make} command form within the root directory to do so. It will generate the executable \texttt{bin/game\_of\_life}, but also will print an error regarding the absence of a source file. It happens because the \texttt{make} command tries to build the source code for the GPU version, but you have not created it yet.
+	
+		To start with the assignment, create the missing file. It is easier if you start working with a copy of the serial version instead of an empty file:\\
+		
+		
+		\indent\texttt{cp src/game\_of\_life.c src/game\_of\_life\_hip.cpp}\\
+		
+		\noindent You DO NOT port code in \texttt{common.*}.
+	
+	The executable, both for the CPU and GPU versions, requires at least two positional arguments: $n$ and $m$,  the size of the grid. A third argument specifies the number of iterations to play; by default it is ten.
+		
+
+	\subsection{Task 1 - GPU porting (0.35 points)}
+	Adapt the serial version of the code to run the most computational intensive part on a GPU using HIP. Evaluation criteria include:
+	\begin{itemize}
+		\item correctness: most of the computation runs on GPU and produces the correct result. To check this, you should use the function that already implements game of life on CPU. 
+		
+		Add at the top of the \texttt{src/game\_of\_life\_hip.cpp} file the following lines:\\
+		
+		\indent\texttt{\#define INCLUDE\_CPU\_VERSION}\\
+		\indent\texttt{\#include "game\_of\_life.c"}
+		
+		\noindent Try different grid sizes and do not limit yourself to square grids only.
+		
+		\item code safety: the code reports if something went wrong so that the user knows the output is not valid.
+	\end{itemize}
+
+	
+	\subsection{Task 2 - performance evaluation (0.15 points)}
+	
+	The \emph{speedup} measure compares the execution time of a parallel code against its serial implementation. It is defined as
+	\begin{math}
+	S = \frac{T_s}{T_p},
+	\end{math}
+	where $T_p$ is the execution time of the parallel code and $T_s$ is the execution time of the serial version. The greater $S$, the better.
+	In this task you are asked to compute the speedup of your GPU code against the original one, for inputs of various size. 
+	
+	To do so you must measure execution times first. The serial code has already timers in place. On the GPU code you can measure the total execution time (actual GPU computation plus any other HIP API call and CPU code to support it) in a similar way. It is interesting and useful to compute what percentage of the total execution time represents the HIP kernel execution alone as the input size increases.
+	
+	Fix the number of steps to $100$. Then, run both the CPU and GPU implementations of The Game of Life for (at least) the following inputs:
+	\begin{enumerate}
+		\item $n = m = 10$
+		\item $n = m = 100$
+		\item $n = m = 1000$
+		\item $n = m = 10000$
+		\item $n = 1000$, $m = 10000$
+	\end{enumerate}
+	
+	\noindent For each of the above inputs, report:
+	
+	\begin{enumerate}
+		\item $T_s$, the execution time of the CPU code,
+		\item $T_p$, the execution time of the GPU implementation,
+		\item $T_s/T_p$, the speedup,
+		\item $t_k$, the percentage of $T_p$ spent executing only kernel code. 
+	\end{enumerate}
+
+You should provide the information in a tabular format where each row presents the requested information for a given input. You are encouraged to also plot a curve for each measure as a function of the input size.
+
+\subsection{Further readings}
+
+The best source of information about GPU programming is the \href{https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html }{CUDA C programming guide}, followed closely by the \href{https://rocm.docs.amd.com/projects/HIP/en/latest/}{HIP documentation}.
+
+\section{Exercise 2: GPU implementation of the game of life using OpenMP (0.5 points total)}
+   
+        This exercise will make you familiar with the process of adapting an existing serial CPU code to make it run on a GPU with directive based GPU programming model OpenMP. This process is often called \textit{porting}. The program, which now you should be familiar with, implements The Game of Life, described in Section 1 of the \href{https://pawsey.atlassian.net/wiki/download/attachments/51923133/HPC_Course_OpenMP_Assignment.pdf?api=v2}{OpenMP assignment}.
+
+        For this exercise, you will work in the \texttt{ex2-gol-gpu-directives/} directory. It contains \texttt{openmp/} directory with the following structure:
+        \begin{itemize}
+                \item a \texttt{Makefile} file to assist you in compiling both the CPU code and the GPU one (that does not exist yet) both for C and Fortran;
+                \item a \texttt{src/} directory to collect source files for this exercise.;
+                \item a \texttt{LICENSE} file, containing the license which this material is distributed under.
+        \end{itemize}
+
+	For this exercise you will need to choose between the following options:
+	\begin{itemize}
+		\item C + OpenMP implementation
+		\item Fortran + OpenMP implementation
+	\end{itemize}
+	Please focus on implementation and optimisation only for single chosen option from the above list.
+
+	To compile the project type \texttt{make} command. It will require an appropriate compiler module, i.e. \texttt{module load rocm/5.2.3; module load craype-accel-amd-gfx90a}.
+	
+	The \texttt{make} command will compile and build CPU and GPU versions, although the GPU versions initially do not contain any directives. 
+
+	To start the assignment edit appropriate GPU source file, e.g. if you have chosen to work on Fortran + OpenMP implementation edit \[openmp/src/02\_gol\_gpu\_openmp\_fort.f90\] file, compile, execute and compare performance. 
+
+        \subsection{Task 2.1 - GPU porting (0.35 points)}
+
+	Adapt the serial version of the code to run the most computational intensive part on a GPU using OpenMP. You DON'T HAVE TO port code in \texttt{common.*}. Evaluation criteria include correctness and portability. The code changes should be minimal and the GPU code should also execute correctly on CPUs when compiled without directives support. 
+	
+	For data transfers, please use \texttt{omp target enter data}, \texttt{omp target exit data}. They have the similar clauses as regular \texttt{data} directives, but allow you to implement data movement for the remainder of the program, or until a matching \texttt{exit data} directive deallocates the data. The regular data directives work only for a structured block of the program. With enter, exit data directives you can schedule data transfers from various functions (not only the one containing the GPU kernel). 
+
+	For parallel loops, please make sure that all arrays used in GPU kernels have appropriate data types, some of the arrays need to be marked as \texttt{private} for performance and correctness. 
+
+        \subsection{Task 2.2 - performance evaluation (0.15 points)} 
+
+	        The \emph{speedup} measure compares the execution time of a parallel code against its serial implementation. It is defined as
+        \begin{math}
+        S = \frac{T_s}{T_p},
+        \end{math}
+        where $T_p$ is the execution time of the parallel code and $T_s$ is the execution time of the serial version. The greater $S$, the better.
+        In this task you are asked to compute the speedup of your GPU code against the original one, for inputs of various size.
+
+        To do so, you must measure execution times first. The serial code has already timers in place.  
+
+        Fix the number of steps to $100$. Then, run both the CPU and GPU implementations of The Game of Life for (at least) the following inputs:
+        \begin{enumerate}
+                \item $n = m = 10$
+                \item $n = m = 100$
+                \item $n = m = 1000$
+                \item $n = m = 10000$
+                \item $n = 1000$, $m = 10000$
+        \end{enumerate}
+
+        \noindent For each of the above inputs, report:
+
+        \begin{enumerate}
+                \item $T_s$, the execution time of the CPU code,
+                \item $T_p$, the execution time of the GPU implementation,
+                \item $T_s/T_p$, the speedup.
+        \end{enumerate}
+
+You should provide the information in a tabular format where each row presents the requested information for a given input. You are encouraged to also plot a curve for each measure as a function of the input size.
+
+
+\subsection{Further readings}
+
+Two documents might be helpful for checking syntax and meaning of various OpenMP directives and clauses:
+\begin{itemize}
+\item \href{https://www.openmp.org/wp-content/uploads/OpenMPRefGuide-5.2-Web-2024.pdf}{OpenMP Reference Guide}
+\end{itemize}
+Please note that above listed reference guides are for the most recent OpenMP standards version. Support for different standard versions might differ between compilers.
+
+\end{document}

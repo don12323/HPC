@@ -1,0 +1,112 @@
+rm obj/*
+rm bin/*
+[ -d obj ] || mkdir obj
+[ -d bin ] || mkdir bin
+hipcc --offload-arch=gfx90a -O3 -g  -o obj/game_of_life.o -c src/game_of_life.c
+hipcc --offload-arch=gfx90a -O3 -g  -o obj/common.o -c src/common.c
+hipcc --offload-arch=gfx90a -O3 -g  -o bin/game_of_life obj/game_of_life.o obj/common.o 
+hipcc --offload-arch=gfx90a -O3 -g  -o obj/game_of_life_hip.o -c src/game_of_life_hip.cpp
+hipcc --offload-arch=gfx90a -O3 -g  -o bin/game_of_life_hip obj/game_of_life_hip.o obj/common.o 
+Requesting grid size of (1000,10000), which requires 0.037253 GB 
+'game_of_life' kernel execution time (ms): 0.4939
+'game_of_life' kernel execution time (ms): 0.1950
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1971
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1957
+'game_of_life' kernel execution time (ms): 0.1968
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1970
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1966
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1966
+'game_of_life' kernel execution time (ms): 0.1968
+'game_of_life' kernel execution time (ms): 0.1957
+'game_of_life' kernel execution time (ms): 0.1970
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1971
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1966
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1968
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1965
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1957
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1970
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1963
+'game_of_life' kernel execution time (ms): 0.1957
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1957
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1957
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1942
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1952
+'game_of_life' kernel execution time (ms): 0.1962
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1958
+'game_of_life' kernel execution time (ms): 0.1947
+'game_of_life' kernel execution time (ms): 0.1949
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1960
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1954
+'game_of_life' kernel execution time (ms): 0.1955
+'game_of_life' kernel execution time (ms): 0.1955
+Total Kernal time (ms): 19.8986
+Finnished GOL in 260.621002 ms
